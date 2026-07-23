@@ -1,0 +1,12 @@
+# Packages installed with `pip install --no-deps`.
+#
+# langchain-chroma's metadata requires the *full* `chromadb` distribution, which
+# depends on `chroma-hnswlib` — a C++ extension that has no prebuilt wheel for
+# every platform and otherwise needs MSVC / build-essential to compile.
+#
+# We don't need the embedded engine: the backend only ever uses chromadb.HttpClient
+# to reach a Chroma server (Docker). So we install langchain-chroma with --no-deps
+# and satisfy its real runtime needs from requirements.txt instead:
+#   chromadb (namespace) -> provided by chromadb-client
+#   fastapi, langchain-core, numpy -> already pinned in requirements.txt
+langchain-chroma==0.1.4
