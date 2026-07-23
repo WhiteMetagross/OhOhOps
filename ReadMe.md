@@ -54,35 +54,27 @@ The following captures were taken from the running local Docker stack. The captu
 
 *Figure 7. OnboardingAccessVerifiedRedacted shows successful namespace verification before opening operations, with the credential value redacted.*
 
-![Onboarding local Docker mode in light theme.](visuals/OnboardingLocalDockerLightMode.png)
-
-*Figure 8. OnboardingLocalDockerLightMode shows the local Compose deployment instructions.*
-
-![Settings page in light mode.](visuals/SettingsLightMode.png)
-
-*Figure 9. SettingsLightMode shows tenant key administration and daemon connection guidance.*
-
 ## Architecture diagrams:
 
 ![Logical architecture of OhOhOps.](docs/diagrams/Architecture.png)
 
-*Figure 10. ArchitectureUml describes the application layers and external provider boundaries. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
+*Figure 8. ArchitectureUml describes the application layers and external provider boundaries. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
 
 ![Docker and cloud deployment topology.](docs/diagrams/Deployment.png)
 
-*Figure 11. DeploymentUml describes the local containers, volumes, sandbox boundary, and cloud services. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
+*Figure 9. DeploymentUml describes the local containers, volumes, sandbox boundary, and cloud services. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
 
 ![Repair request sequence.](docs/diagrams/Sequence.png)
 
-*Figure 12. SequenceUml describes a repair request from dashboard submission through ledger recording. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
+*Figure 10. SequenceUml describes a repair request from dashboard submission through ledger recording. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
 
 ![Repair activity flow.](docs/diagrams/Activity.png)
 
-*Figure 13. ActivityUml describes detection, arbitration, sandbox execution, deployment, rollback, and retry decisions. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
+*Figure 11. ActivityUml describes detection, arbitration, sandbox execution, deployment, rollback, and retry decisions. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
 
 ![Repair state machine.](docs/diagrams/StateMachine.png)
 
-*Figure 14. StateMachineUml describes the durable conceptual states of a repair run. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
+*Figure 12. StateMachineUml describes the durable conceptual states of a repair run. The PNG was compiled from temporary PlantUML source with the local PlantUML engine.*
 
 ## Repository map:
 
