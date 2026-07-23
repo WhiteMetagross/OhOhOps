@@ -45,7 +45,7 @@ langgraph==0.2.62
 
 # Anomaly detection (Phase 3)
 pyod==2.0.3
-numpy==1.26.4
+numpy==2.5.1
 scikit-learn==1.6.0
 psutil==6.1.1
 
