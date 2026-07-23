@@ -90,6 +90,23 @@ CREATE TABLE IF NOT EXISTS pending_deployments (
 );
 """
 
+_LOCK_DOWN_TABLES = """
+ALTER TABLE operational_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE api_keys ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pending_deployments ENABLE ROW LEVEL SECURITY;
+
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN
+        EXECUTE 'REVOKE ALL PRIVILEGES ON TABLE operational_logs, api_keys, pending_deployments FROM anon';
+    END IF;
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'authenticated') THEN
+        EXECUTE 'REVOKE ALL PRIVILEGES ON TABLE operational_logs, api_keys, pending_deployments FROM authenticated';
+    END IF;
+END
+$$;
+"""
+
 _INSERT = """
 INSERT INTO operational_logs
     (event_source, agent_action, execution_payload, execution_status,
@@ -131,6 +148,7 @@ class Ledger:
             await conn.execute(_CREATE_TABLE)
             await conn.execute(_CREATE_API_KEYS_TABLE)
             await conn.execute(_CREATE_PENDING_DEPLOYMENTS_TABLE)
+            await conn.execute(_LOCK_DOWN_TABLES)
         logger.info("ledger schema ensured")
 
     async def log_event(self, entry: OperationalLogEntry) -> None:
