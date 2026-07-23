@@ -24,7 +24,7 @@ pinecone>=6.0.0,<7.0.0
 # chromadb.HttpClient, so it does NOT need the embedded engine. Using the full
 # `chromadb` package would pull in `chroma-hnswlib`, whose source build requires
 # a C++ compiler (MSVC on Windows). The thin client ships pure-Python wheels.
-chromadb-client==0.5.23
+chromadb-client==1.5.9
 # NOTE: langchain-chroma is installed separately with --no-deps (see
 # requirements-nodeps.txt / Makefile). Its metadata pins the full `chromadb`,
 # which would re-introduce the chroma-hnswlib build.
