@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ohohops
+      POSTGRES_USER: ohohops
+      POSTGRES_PASSWORD: ohohops-test-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ohohops -d ohohops"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    environment:
+      USE_MOCK_LLM: "true"
+      USE_LOCAL_EMBEDDINGS: "false"
+      ENABLE_POST_HEAL_RESTART: "false"
+      OHOHOPS_API_KEY: "ohohops-test-key"
+      OHOHOPS_WEBHOOK_SECRET: "ohohops-test-secret"
+      SUPABASE_DB_URL: "postgresql://ohohops:ohohops-test-password@postgres:5432/ohohops"
+    depends_on:
+      postgres:
+        condition: service_healthy

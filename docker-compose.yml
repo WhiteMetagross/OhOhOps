@@ -1,0 +1,70 @@
+services:
+  chromadb:
+    image: chromadb/chroma:0.5.23
+    restart: unless-stopped
+    volumes:
+      - chroma_data:/chroma/chroma
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    environment:
+      - DEPLOYMENT_MODE=local
+      - SANDBOX_MODE=docker
+      - SANDBOX_MEM_LIMIT=${SANDBOX_MEM_LIMIT:-256m}
+      - SANDBOX_TIMEOUT_SECONDS=${SANDBOX_TIMEOUT_SECONDS:-60}
+      - CHROMA_HOST=chromadb
+      - USE_MOCK_LLM=${USE_MOCK_LLM:-false}
+      - USE_LOCAL_EMBEDDINGS=${USE_LOCAL_EMBEDDINGS:-false}
+      - ENABLE_TELEMETRY_LOOP=${ENABLE_TELEMETRY_LOOP:-false}
+      - ENABLE_POST_HEAL_RESTART=${ENABLE_POST_HEAL_RESTART:-true}
+      - OHOHOPS_API_KEY=${OHOHOPS_API_KEY:-ohohops-dev-key}
+      - OHOHOPS_WEBHOOK_SECRET=${OHOHOPS_WEBHOOK_SECRET:-ohohops-dev-secret}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_API_KEY_CHAT=${GEMINI_API_KEY_CHAT:-}
+      - GEMINI_API_KEY_SECURITY=${GEMINI_API_KEY_SECURITY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - SUPABASE_DB_URL=${SUPABASE_DB_URL:-}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - sandbox_workspaces:/sandbox
+    depends_on:
+      - chromadb
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  chroma_data:
+    name: ohohops_chroma_0523
+  sandbox_workspaces:
+    name: sandbox_workspaces

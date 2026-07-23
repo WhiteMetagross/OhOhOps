@@ -1,0 +1,14 @@
+[
+  {
+    "question": "How does the security arbitration node handle potentially dangerous commands?",
+    "ground_truth": "The security arbitration node uses a two-layer approach. First, it uses a regex blocklist to instantly reject known dangerous commands like 'rm -rf'. Second, it uses a zero-temperature LLM as a final arbiter to verify the safety of the proposed patch. If the patch fails clearance or if the API rate limit is exceeded, it fails closed and blocks execution."
+  },
+  {
+    "question": "What is the network mode of the Docker sandbox?",
+    "ground_truth": "The Docker sandbox runs with network_mode set to 'none' to completely isolate the execution environment and prevent the AI agent from accessing the external network."
+  },
+  {
+    "question": "How does the telemetry loop detect anomalies?",
+    "ground_truth": "The telemetry loop continuously samples system metrics (CPU and Memory) using psutil, along with a real application error rate derived from a sliding-window log counter (LogErrorCounter). It feeds these metrics into a PyOD Isolation Forest machine learning model. If the model detects an outlier, it triggers the autonomous repair graph."
+  }
+]

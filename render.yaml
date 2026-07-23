@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: ohohops-api
+    env: python
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && pip install --no-deps -r requirements-nodeps.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: DEPLOYMENT_MODE
+        value: cloud
+      - key: SANDBOX_MODE
+        value: subprocess
+      - key: ENABLE_TELEMETRY_LOOP
+        value: "false"
+      - key: USE_MOCK_LLM
+        value: "false"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY_CHAT
+        sync: false
+      - key: GEMINI_API_KEY_SECURITY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false
+    healthCheckPath: /api/v1/health
+    autoDeploy: true

@@ -1,0 +1,59 @@
+# Web framework / server
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+sse-starlette==2.2.1
+python-dotenv==1.0.1
+httpx==0.28.1
+python-multipart==0.0.12
+
+# LLM / RAG stack
+langchain==0.3.14
+langchain-community==0.3.14
+langchain-anthropic==0.3.1
+langchain-openai==0.3.14
+langchain-google-genai==2.0.8
+langchain-text-splitters==0.3.5
+langchain-pinecone==0.2.8
+# Ultra-lightweight local embeddings (Zero PyTorch)
+fastembed==0.3.1
+google-generativeai==0.8.3
+pinecone>=6.0.0,<7.0.0
+# Thin HTTP client only — the backend talks to a Chroma *server* (Docker) via
+# chromadb.HttpClient, so it does NOT need the embedded engine. Using the full
+# `chromadb` package would pull in `chroma-hnswlib`, whose source build requires
+# a C++ compiler (MSVC on Windows). The thin client ships pure-Python wheels.
+chromadb-client==0.5.23
+# NOTE: langchain-chroma is installed separately with --no-deps (see
+# requirements-nodeps.txt / Makefile). Its metadata pins the full `chromadb`,
+# which would re-introduce the chroma-hnswlib build.
+
+# Ingestion helpers
+pathspec==0.12.1
+tree-sitter-language-pack==1.13.3
+
+# Sandbox
+docker==7.1.0
+
+# Orchestration graph
+langgraph==0.2.62
+
+# Secondary security model (Phase 3.4)
+# The arbiter runs on Gemini (langchain-google-genai, above) at temperature 0;
+# no separate provider SDK is required.
+
+# Anomaly detection (Phase 3)
+pyod==2.0.3
+numpy==1.26.4
+scikit-learn==1.6.0
+psutil==6.1.1
+
+# Operational ledger (Phase 0.4)
+supabase==2.11.0
+asyncpg==0.30.0
+
+# Evaluation suite (Phase 4)
+ragas==0.2.10
+datasets==3.2.0
+slowapi==0.1.9
