@@ -12,4 +12,4 @@ python scripts/test_stream.py
 ```
 
 `test_sandbox.py` needs Docker. Vector, node, and stream checks need matching
-environment configuration. See `docs/CONFIGURATION.md`.
+environment configuration. See `docs/Configuration.md`.

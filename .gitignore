@@ -31,3 +31,7 @@ Thumbs.db
 # IDEs
 .vscode/
 .idea/
+
+# Documentation build tools and temporary PlantUML source.
+.tools/
+.plantuml-src/

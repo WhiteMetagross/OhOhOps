@@ -4,7 +4,7 @@ OhOhOps is organized as a safety oriented, event visible SRE control plane. The 
 
 ![Logical architecture of OhOhOps.](diagrams/Architecture.png)
 
-*Figure 1. ArchitectureUml shows the main application layers, storage boundaries, and external model providers.*
+*Figure 1. ArchitectureUml shows the main application layers, storage boundaries, and external model providers. It is compiled from temporary PlantUML source with the local PlantUML Java engine.*
 
 ## Architectural objectives:
 
